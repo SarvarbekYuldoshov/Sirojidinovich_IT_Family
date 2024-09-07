@@ -13,7 +13,7 @@ const Header = () => {
         const token = "7288526920:AAH-vd_HYqMjr_qE5zG6idFBNxfFeMi9aFo";
         const chat_id = 6801549705;
         const url = `https://api.telegram.org/bot${token}/sendMessage`;
-        const messageText = `Ism: ${name}\nFamiliya: ${surname}\nNumber: ${number}`;
+        const messageText = `Ism: ${name}\nFamiliya: ${surname}\nNumber: +998${number}`;
 
         fetch(url, {
           method: 'POST',
@@ -51,14 +51,33 @@ const Header = () => {
       </Button>
       <Modal open={open} footer={null} onCancel={closeModal}>
         <Form form={form} layout="vertical">
-          <Form.Item name="name" rules={[{ required: true, message: 'Ismingizni kiriting' }]}>
+          <Form.Item
+            name="name"
+            rules={[
+              { required: true, message: 'Ismingizni kiriting' },
+              { min: 4, message: 'Ismingiz kamida 4 ta harfdan iborat bo\'lishi kerak' }
+            ]}
+          >
             <Input placeholder='Ismingizni kiriting' />
           </Form.Item>
-          <Form.Item name="surname" rules={[{ required: true, message: 'Familiyangizni kiriting' }]}>
+          <Form.Item
+            name="surname"
+            rules={[
+              { required: true, message: 'Familiyangizni kiriting' },
+              { min: 4, message: 'Familiyangiz kamida 4 ta harfdan iborat bo\'lishi kerak' }
+            ]}
+          >
             <Input placeholder='Familiyangizni kiriting' />
           </Form.Item>
-          <Form.Item name="number" rules={[{ required: true, message: 'Raqamingizni kiriting' }]}>
-            <Input placeholder='Raqamingizni kiriting' />
+          <Form.Item
+            name="number"
+            rules={[
+              { required: true, message: 'Raqamingizni kiriting' },
+              { len: 9, message: 'Raqamingiz 9 ta raqamdan iborat bo\'lishi kerak' },
+              { pattern: /^[0-9]+$/, message: 'Faqat raqam kiriting' }
+            ]}
+          >
+            <Input addonBefore="+998" placeholder='Raqamingizni kiriting (9 ta raqam)' />
           </Form.Item>
           <Button onClick={sendMessage} type="primary">
             Yuborish
